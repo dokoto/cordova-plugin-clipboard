@@ -25,10 +25,10 @@
         </config-file>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="clipBoard">
-                <param name="android-package" value="com.cordova.plugins.cookiemaster.clipBoard"/>
+                <param name="android-package" value="com.cordova.plugins.clipboard.clipBoard"/>
             </feature>
         </config-file>
  
-        <source-file src="src/android/com/cordova/plugins/cookiemaster/clipBoard.java" target-dir="src/com/cordova/plugins/cookiemaster" />      
+        <source-file src="src/android/com/cordova/plugins/clipboard/clipBoard.java" target-dir="src/com/cordova/plugins/clipboard" />      
     </platform>          
 </plugin>
