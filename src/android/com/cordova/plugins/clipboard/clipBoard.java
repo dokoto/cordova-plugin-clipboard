@@ -10,6 +10,7 @@ import org.json.JSONException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 
+import android.os.Build;
 import android.util.Log;
 
 
@@ -17,14 +18,12 @@ public class clipBoard extends CordovaPlugin {
 
     private final String TAG = "ClipBoard";
     private String mPreviousText = "";
+    private ClipboardManager cliboardManager = null;
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         try {
-            // Get params from JS
-            //final String param1 = args.getString(0);
-
-            final ClipboardManager cliboardManager = (ClipboardManager) cordova.getActivity().getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+            cliboardManager = (ClipboardManager) cordova.getActivity().getSystemService(android.content.Context.CLIPBOARD_SERVICE);
             cliboardManager.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
 
                 @Override
@@ -32,12 +31,12 @@ public class clipBoard extends CordovaPlugin {
 
                     try {
                         ClipData clipData = cliboardManager.getPrimaryClip();
-                        System.out.println("********** clip changed, clipData: " + clipData.getItemAt(0));
                         ClipData.Item item = clipData.getItemAt(0);
                         JSONObject json = null;
                         json = new JSONObject("{item:\"" + item.getText() + "\"}");
                         if (json != null) {
                             PluginResult res = new PluginResult(PluginResult.Status.OK, json);
+                            res.setKeepCallback(true);
                             callbackContext.sendPluginResult(res);
                         }
                     } catch (Exception e) {
